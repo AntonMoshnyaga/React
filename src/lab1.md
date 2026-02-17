@@ -1,0 +1,16 @@
+Лабораторна робота №1 
+
+1. Input.jsx .
+import styles from './Input.module.css'; function Input({ type = 'text', placeholder = '', label }) { return (
+
+{label && {label}}
+) }
+export default Input 
+2. Input.module.css . 
+.wrapper { display: flex; flex-direction: column; margin-bottom: 16px; }
+
+.label { margin-bottom: 6px; font-size: 14px; font-weight: 500; }
+
+.input { padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; transition: border-color 0.2s ease; }
+
+.input:focus { border-color: #4f46e5; }
