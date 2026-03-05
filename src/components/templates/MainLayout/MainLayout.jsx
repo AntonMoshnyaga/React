@@ -23,6 +23,7 @@ const MainLayout = () => {
                     <NavLink to="/students" className={getActiveClass}>Студенти</NavLink>
                     <NavLink to="/feed" className={getActiveClass}>Стрічка</NavLink>
                     <NavLink to="/profile" className={getActiveClass}>Профіль</NavLink>
+                    <NavLink to="/store" className={getActiveClass}>Магазин</NavLink>
                 </div>
                 <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '10px' }}>
                     {isAuthenticated ? (
