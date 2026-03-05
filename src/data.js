@@ -24,3 +24,12 @@ export const postsData = [
         likes: 2
     }
 ];
+
+export const students = [
+    { id: 1, name: "Олександр", score: 85, isActive: true },
+    { id: 2, name: "Марія", score: 55, isActive: true },
+    { id: 3, name: "Іван", score: 92, isActive: false },
+    { id: 4, name: "Олена", score: 70, isActive: true },
+    { id: 5, name: "Петро", score: 45, isActive: false },
+    { id: 6, name: "Анна", score: 98, isActive: true },
+];
