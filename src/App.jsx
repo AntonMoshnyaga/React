@@ -5,7 +5,9 @@ import StudentsPage from './pages/Students/StudentsPage';
 import Feed from './pages/Feed/Feed';
 import PostPage from './pages/PostPage/PostPage';
 import Profile from './pages/Profile/Profile';
+import Login from './pages/Login/Login';
 import NotFound from './pages/NotFound/NotFound';
+import ProtectedRoute from './components/hoc/ProtectedRoute';
 import './App.module.css';
 
 function App() {
@@ -16,7 +18,13 @@ function App() {
         <Route path="students" element={<StudentsPage />} />
         <Route path="feed" element={<Feed />} />
         <Route path="feed/:postId" element={<PostPage />} />
-        <Route path="profile/*" element={<Profile />} />
+        <Route path="login" element={<Login />} />
+
+        {/* Захищений маршрут */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="profile/*" element={<Profile />} />
+        </Route>
+
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
