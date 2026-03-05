@@ -9,6 +9,7 @@ const MainLayout = () => {
         <div className={styles.wrapper}>
             <nav className={styles.navbar}>
                 <NavLink to="/" className={getActiveClass} end>Головна</NavLink>
+                <NavLink to="/students" className={getActiveClass}>Студенти</NavLink>
                 <NavLink to="/feed" className={getActiveClass}>Стрічка</NavLink>
                 <NavLink to="/profile" className={getActiveClass}>Профіль</NavLink>
             </nav>
