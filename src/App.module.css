@@ -10,3 +10,31 @@
     flex-direction: column;
     gap: 20px;
 }
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filters button {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.active {
+    background: #007bff !important;
+    color: white;
+    border-color: #007bff !important;
+}
+
+.empty {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+}
