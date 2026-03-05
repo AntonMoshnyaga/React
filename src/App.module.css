@@ -1,0 +1,12 @@
+.appContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+.feed {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
