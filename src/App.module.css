@@ -38,3 +38,60 @@
     font-style: italic;
     padding: 20px;
 }
+
+.toggleBtn {
+    padding: 8px 16px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.helpText {
+    padding: 10px;
+    background-color: #e9ecef;
+    border-left: 4px solid #007bff;
+    border-radius: 4px;
+}
+
+.tabsMenu {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+}
+
+.tabBtn {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: -2px;
+}
+
+.activeTab {
+    border-bottom: 2px solid #007bff;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.contentSection {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.studentList {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.studentList li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
