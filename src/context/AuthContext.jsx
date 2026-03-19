@@ -5,22 +5,37 @@ export const AuthContext = createContext();
 
 // Компонент-провайдер
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
 
-    const login = (userData) => {
-        setIsAuthenticated(true);
-        setUser(userData);
-    };
+  const login = async (email) => {
+    try {
+      // Симуляція мережевої затримки для показу лоадера на кнопці
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const logout = () => {
-        setIsAuthenticated(false);
-        setUser(null);
-    };
+      // "Стягуємо" дані фіктивного користувача
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/users/1"
+      );
+      const userData = await response.json();
 
-    return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+      setIsAuthenticated(true);
+      // Зберігаємо справжні дані з АРІ у нашому стейті
+      setUser({ ...userData, email });
+    } catch (error) {
+      console.error("Помилка авторизації:", error);
+      throw error;
+    }
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

@@ -6,15 +6,23 @@ import Button from "../../components/atoms/Button";
 
 const Login = () => {
     const [email, setEmail] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Імітація перевірки даних (у Лаб №6 тут буде запит до API)
+        
         if (email.trim() !== "") {
-            login({ email });
-            navigate("/profile", { replace: true });
+            setIsLoading(true);
+            try {
+                await login(email);
+                navigate("/profile", { replace: true });
+            } catch (error) {
+                alert("Помилка при спробі входу");
+            } finally {
+                setIsLoading(false);
+            }
         } else {
             alert("Будь ласка, введіть електронну пошту!");
         }
@@ -31,7 +39,9 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Введіть ваш Email..."
                 />
-                <Button type="submit">Увійти</Button>
+                <Button type="submit" disabled={isLoading}>
+                    {isLoading ? "Завантаження..." : "Увійти"}
+                </Button>
             </form>
         </div>
     );
