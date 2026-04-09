@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ProductDetails from '../../components/molecules/ProductDetails';
 import QuantityControl from '../../components/molecules/QuantityControl';
 import Button from '../../components/atoms/Button';
+import useCartStore from '../../store/useCartStore';
 
 // Smart Компонент: Контейнер Товару
 const ProductCard = () => {
-    // Стан "Кількості товару" знаходиться САМЕ ТУТ (в контейнері), 
-    // оскільки він визначає логіку перед покупкою і йому потрібен доступ до даних товару.
-    const [quantity, setQuantity] = useState(1);
+    // Використовуємо глобальне сховище
+    const { items, addToCart, updateQuantity } = useCartStore();
 
     // Імітація даних з сервера
     const productData = {
@@ -19,25 +19,42 @@ const ProductCard = () => {
         imageUrl: "https://via.placeholder.com/300x300.png?text=Sony+WH-1000XM4"
     };
 
-    const handleIncrease = () => setQuantity(prev => prev + 1);
-    const handleDecrease = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+    // Знаходимо, чи є цей товар уже в кошику
+    const cartItem = items.find(item => item.id === productData.id);
+    const quantity = cartItem ? cartItem.quantity : 0;
+
+    const handleIncrease = () => {
+        if (cartItem) {
+            updateQuantity(productData.id, quantity + 1);
+        } else {
+            addToCart(productData, 1);
+        }
+    };
+
+    const handleDecrease = () => {
+        if (quantity > 1) {
+            updateQuantity(productData.id, quantity - 1);
+        }
+    };
 
     const handleBuy = () => {
-        alert(`Додано до кошика: ${productData.title}\nКількість: ${quantity} шт.\nЗагальна сума: ${productData.price * quantity} ₴`);
+        if (!cartItem) {
+            addToCart(productData, 1);
+        }
+        alert(`Товар "${productData.title}" у кошику!`);
     };
 
     return (
         <div style={{ maxWidth: '800px', margin: '40px auto', padding: '20px', display: 'flex', gap: '20px', background: 'white', borderRadius: '12px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
 
-            {/* Зображення товару (Dumb HTML Element) */}
+            {/* Зображення товару */}
             <div style={{ flex: '0 0 300px' }}>
                 <img src={productData.imageUrl} alt={productData.title} style={{ width: '100%', borderRadius: '8px', objectFit: 'cover' }} />
             </div>
 
-            {/* Деталі товару (Презентаційний компонент) */}
+            {/* Деталі товару */}
             <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
 
-                {/* Передача даних через Props */}
                 <ProductDetails
                     title={productData.title}
                     description={productData.description}
@@ -48,16 +65,16 @@ const ProductCard = () => {
                 <div style={{ padding: '0 20px', marginTop: 'auto' }}>
                     <hr style={{ border: 'none', borderTop: '1px solid #eee', marginBottom: '20px' }} />
 
-                    {/* Керування кількістю (Презентаційний компонент, але з колбеками змінює стан батька) */}
+                    {/* Керування кількістю через глобальний стан */}
                     <QuantityControl
-                        quantity={quantity}
+                        quantity={quantity || 1}
                         onIncrease={handleIncrease}
                         onDecrease={handleDecrease}
                     />
 
-                    {/* Кнопка купити */}
-                    <Button onClick={handleBuy} style={{ width: '100%', padding: '15px', fontSize: '18px' }}>
-                        Купити за {productData.price * quantity} ₴
+                    {/* Кнопка купити/в кошику */}
+                    <Button onClick={handleBuy} style={{ width: '100%', padding: '15px', fontSize: '18px', background: cartItem ? '#4caf50' : '#007bff' }}>
+                        {cartItem ? `В кошику (${quantity})` : `Купити за ${productData.price} ₴`}
                     </Button>
                 </div>
             </div>
@@ -65,5 +82,6 @@ const ProductCard = () => {
         </div>
     );
 };
+
 
 export default ProductCard;

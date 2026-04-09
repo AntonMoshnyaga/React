@@ -2,9 +2,11 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import useLocalStorage from '../../../hooks/useLocalStorage';
+import useCartStore from '../../../store/useCartStore';
 
 const MainLayout = () => {
     const { isAuthenticated, user, logout } = useContext(AuthContext);
+    const totalQuantity = useCartStore(state => state.totalQuantity);
     const navigate = useNavigate();
     
     // Використання кастомного хука для збереження теми в localStorage
@@ -47,6 +49,25 @@ const MainLayout = () => {
                     <NavLink to="/feed" className={getActiveClass}>Стрічка</NavLink>
                     <NavLink to="/profile" className={getActiveClass}>Профіль</NavLink>
                     <NavLink to="/store" className={getActiveClass}>Магазин</NavLink>
+                    
+                    <NavLink to="/store" style={{ position: 'relative', textDecoration: 'none', color: 'inherit' }}>
+                        🛒 
+                        {totalQuantity > 0 && (
+                            <span style={{ 
+                                position: 'absolute', 
+                                top: '-8px', 
+                                right: '-12px', 
+                                background: '#e74c3c', 
+                                color: 'white', 
+                                borderRadius: '50%', 
+                                padding: '2px 6px', 
+                                fontSize: '10px',
+                                fontWeight: 'bold'
+                            }}>
+                                {totalQuantity}
+                            </span>
+                        )}
+                    </NavLink>
                 </nav>
                 <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '15px' }}>
                     {/* Кнопка перемикання теми */}
